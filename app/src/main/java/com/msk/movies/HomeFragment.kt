@@ -34,6 +34,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: MovieListViewModel
     private var mMovieListAdapter: MovieListAdapter? = null
     private var mSearchItemList : PagedList<SearchItem>? = null
+    private var mView: View? = null
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -43,19 +44,12 @@ class HomeFragment : Fragment() {
         super.onAttach(context)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel::class.java)
-        initView()
-        initAdapter()
-        callSearchMovieAPI(MovieUtils.DEFAULT_SEARCH_MOVIE_NAME)
-    }
-
     private fun initAdapter() {
-        mMovieListAdapter = MovieListAdapter()
-        movieRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        movieRecyclerView.adapter = mMovieListAdapter
-
+        if(mMovieListAdapter==null){
+            mMovieListAdapter = MovieListAdapter()
+            movieRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            movieRecyclerView.adapter = mMovieListAdapter
+        }
         movieRecyclerView.addOnItemClickListener(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
                 var bundle = bundleOf("POSTER_URL" to mSearchItemList?.get(position)?.poster)
@@ -76,7 +70,7 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun initView() {
+    private fun initSearchView() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             android.widget.SearchView.OnQueryTextListener {
 
@@ -86,8 +80,7 @@ class HomeFragment : Fragment() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 MovieUtils.hideKeyboard(activity!!)
                 resetList()
-                callSearchMovieAPI(query
-                )
+                callSearchMovieAPI(query)
                 return false
             }
         })
@@ -100,12 +93,18 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        if(mView==null){
+            viewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel::class.java)
+            mView = inflater.inflate(R.layout.fragment_home, container, false)
+            callSearchMovieAPI(MovieUtils.DEFAULT_SEARCH_MOVIE_NAME)
+        }
+        return mView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setRetainInstance(true);
         navController = Navigation.findNavController(view)
+        initAdapter()
+        initSearchView()
     }
 }
