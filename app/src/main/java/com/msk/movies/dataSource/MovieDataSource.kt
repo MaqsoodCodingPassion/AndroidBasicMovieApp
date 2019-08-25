@@ -12,7 +12,10 @@ class MovieDataSource(
     val apiKey: String
 ) : PageKeyedDataSource<Int, SearchItem>() {
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, SearchItem>) {
+    override fun loadInitial(
+        params: LoadInitialParams<Int>,
+        callback: LoadInitialCallback<Int, SearchItem>
+    ) {
         compositeDisposable.add(
             networkService.getMoviesList(movieName, apiKey, 1, params.requestedLoadSize)
                 .subscribe(
@@ -25,10 +28,7 @@ class MovieDataSource(
                             )
                         }
                     },
-                    {
-                        it.printStackTrace()
-                       // Action { loadInitial(params, callback) }
-                    }
+                    { it.printStackTrace()}
                 )
         )
     }
@@ -45,10 +45,7 @@ class MovieDataSource(
                             )
                         }
                     },
-                    {
-                        it.printStackTrace()
-                       // Action { loadAfter(params, callback) }
-                    }
+                    { it.printStackTrace() }
                 )
         )
     }

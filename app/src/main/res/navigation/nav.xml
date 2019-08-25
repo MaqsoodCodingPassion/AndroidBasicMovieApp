@@ -4,12 +4,12 @@
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/bottom_navigation"
             app:startDestination="@id/homeFragment">
 
-    <fragment android:id="@+id/homeFragment" android:name="com.msk.movies.HomeFragment"
+    <fragment android:id="@+id/homeFragment" android:name="com.msk.movies.fragments.HomeFragment"
               android:label="Movies" tools:layout="@layout/fragment_home">
 
         <action android:id="@+id/action_fragmentHome_to_movieDetails" app:destination="@id/movieDetailsfragment"/>
     </fragment>
 
-    <fragment android:id="@+id/movieDetailsfragment" android:name="com.msk.movies.MovieDetailsFragment"
+    <fragment android:id="@+id/movieDetailsfragment" android:name="com.msk.movies.fragments.MovieDetailsFragment"
               android:label="Movie Details" tools:layout="@layout/fragment_movie_details"></fragment>
 </navigation>

@@ -1,4 +1,4 @@
-package com.msk.movies
+package com.msk.movies.fragments
 
 
 import android.content.Context
@@ -20,6 +20,7 @@ import com.khan.movieskotlin.MovieListAdapter
 import com.khan.movieskotlin.MovieListViewModel
 import com.khan.movieskotlin.MovieUtils
 import com.khan.movieskotlin.model.SearchItem
+import com.msk.movies.R
 import com.msk.movies.util.OnItemClickListener
 import com.msk.movies.util.ViewModelFactory
 import com.msk.movies.util.addOnItemClickListener
@@ -66,7 +67,7 @@ class HomeFragment : Fragment() {
             movieRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             movieRecyclerView.adapter = mMovieListAdapter
         }
-        movieRecyclerView.addOnItemClickListener(object: OnItemClickListener {
+        movieRecyclerView.(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
                 var bundle = bundleOf("POSTER_URL" to mSearchItemList?.get(position)?.poster)
                 navController!!.navigate(R.id.action_fragmentHome_to_movieDetails,bundle)

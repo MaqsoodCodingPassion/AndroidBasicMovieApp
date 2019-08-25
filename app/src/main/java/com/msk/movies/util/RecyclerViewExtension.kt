@@ -10,7 +10,7 @@ interface OnItemClickListener {
 fun RecyclerView.addOnItemClickListener(onClickListener: OnItemClickListener) {
     this.addOnChildAttachStateChangeListener(object: RecyclerView.OnChildAttachStateChangeListener {
         override fun onChildViewDetachedFromWindow(view: View) {
-            view?.setOnClickListener(null)
+            view?.setOnClickListener(addOnItemClickListenernull)
         }
 
         override fun onChildViewAttachedToWindow(view: View) {
