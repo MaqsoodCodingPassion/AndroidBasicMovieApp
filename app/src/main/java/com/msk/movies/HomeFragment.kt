@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
 
     lateinit var navController: NavController
 
-    private lateinit var viewModel: MovieListViewModel
+    private lateinit var mViewModel: MovieListViewModel
     private var mMovieListAdapter: MovieListAdapter? = null
     private var mSearchItemList : PagedList<SearchItem>? = null
     private var mView: View? = null
@@ -44,6 +44,22 @@ class HomeFragment : Fragment() {
         super.onAttach(context)
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        if(mView==null){
+            mViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel::class.java)
+            mView = inflater.inflate(R.layout.fragment_home, container, false)
+            callSearchMovieAPI(MovieUtils.DEFAULT_SEARCH_MOVIE_NAME)
+        }
+        return mView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
+        initAdapter()
+        initSearchView()
+    }
+
     private fun initAdapter() {
         if(mMovieListAdapter==null){
             mMovieListAdapter = MovieListAdapter()
@@ -54,18 +70,6 @@ class HomeFragment : Fragment() {
             override fun onItemClicked(position: Int, view: View) {
                 var bundle = bundleOf("POSTER_URL" to mSearchItemList?.get(position)?.poster)
                 navController!!.navigate(R.id.action_fragmentHome_to_movieDetails,bundle)
-            }
-        })
-    }
-
-    private fun callSearchMovieAPI(movieName: String?) {
-        viewModel.getMovieList(movieName!!, MovieUtils.MOVIE_API_KEY).observe(this, Observer {
-            if(it.size > 0){
-                mSearchItemList = it
-                mMovieListAdapter!!.submitList(it)
-            }else{
-                resetList()
-                MovieUtils.showErrorDialog(activity!!, resources.getString(R.string.movie_not_found))
             }
         })
     }
@@ -86,25 +90,21 @@ class HomeFragment : Fragment() {
         })
     }
 
+    private fun callSearchMovieAPI(movieName: String?) {
+        mViewModel.getMovieList(movieName!!, MovieUtils.MOVIE_API_KEY).observe(this, Observer {
+            if(it.size > 0){
+                mSearchItemList = it
+                mMovieListAdapter!!.submitList(it)
+            }else{
+                resetList()
+                MovieUtils.showErrorDialog(activity!!, resources.getString(R.string.movie_not_found))
+            }
+        })
+    }
+
     private fun resetList() {
         MovieUtils.hideKeyboard(activity!!)
         mMovieListAdapter!!.submitList(null)
         mMovieListAdapter!!.notifyDataSetChanged()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if(mView==null){
-            viewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel::class.java)
-            mView = inflater.inflate(R.layout.fragment_home, container, false)
-            callSearchMovieAPI(MovieUtils.DEFAULT_SEARCH_MOVIE_NAME)
-        }
-        return mView
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(view)
-        initAdapter()
-        initSearchView()
     }
 }
