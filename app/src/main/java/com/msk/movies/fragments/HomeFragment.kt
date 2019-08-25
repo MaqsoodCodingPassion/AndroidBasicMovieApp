@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
             movieRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             movieRecyclerView.adapter = mMovieListAdapter
         }
-        movieRecyclerView.(object: OnItemClickListener {
+        movieRecyclerView.addOnItemClickListener(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
                 var bundle = bundleOf("POSTER_URL" to mSearchItemList?.get(position)?.poster)
                 navController!!.navigate(R.id.action_fragmentHome_to_movieDetails,bundle)
