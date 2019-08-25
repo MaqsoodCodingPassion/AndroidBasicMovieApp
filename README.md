@@ -1,5 +1,4 @@
 # AndroidBasicMovieApp
-AndroidBasicMovieApp
    This repository contains a detailed movie sample app that implements MVVM architecture using 
    
       - NavigationContriller
