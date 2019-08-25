@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="search_movie">Search Movie</string>
+    <string name="movie_name">Movie Name :</string>
+    <string name="year">Year :</string>
+    <string name="movie_name_hint">Movie Name</string>
+    <string name="movie_not_found">Movie Not found</string>
+</resources>
