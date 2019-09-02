@@ -8,7 +8,6 @@ Dagger2
 RxJava2
 Retrofit
 
-![Alt Text](https://imgur.com/HgPGvft)
+[Imgur](https://i.imgur.com/lvjNHWz.png)
 
-![Alt Text](https://imgur.com/lvjNHWz)
 
