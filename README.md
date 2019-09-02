@@ -7,3 +7,8 @@ Jetpack - Paging
 Dagger2
 RxJava2
 Retrofit
+
+![Alt Text](https://imgur.com/HgPGvft)
+
+![Alt Text](https://imgur.com/lvjNHWz)
+
