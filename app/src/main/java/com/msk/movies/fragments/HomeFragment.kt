@@ -69,7 +69,11 @@ class HomeFragment : Fragment() {
         }
         movieRecyclerView.addOnItemClickListener(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                var bundle = bundleOf("POSTER_URL" to mSearchItemList?.get(position)?.poster)
+                //imdbID
+                var bundle = Bundle()
+                bundle.putString("POSTER_URL",mSearchItemList?.get(position)?.poster)
+                bundle.putString("imdbID",mSearchItemList?.get(position)?.imdbID)
+               // var bundle = bundleOf("POSTER_URL" to mSearchItemList?.get(position)?.poster)
                 navController!!.navigate(R.id.action_fragmentHome_to_movieDetails,bundle)
             }
         })

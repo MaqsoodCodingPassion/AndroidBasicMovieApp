@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="@string/label_runtime"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/row_item_margin"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="14sp"
+        tools:text="Movie" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_23"
+        android:text="@string/label_casting"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/textsize_20"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/casting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/row_item_margin"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/textsize_14"
+        tools:text="Casting" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_23"
+        android:text="@string/label_production"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/textsize_20"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/production"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/textsize_14"
+        tools:text="someone" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_23"
+        android:text="@string/label_metascore"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/textsize_20"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/metascore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/textsize_14"
+        tools:text="Metascore" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_23"
+        android:text="@string/label_synopsis"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/textsize_20"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/synopsis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/row_item_margin"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/textsize_14"
+        tools:text="Synopsis" />
+
+
+
+    <TextView
+        android:id="@+id/detail_body_reviews"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_23"
+        android:text="Reviews"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/textsize_20"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+
+</LinearLayout>
