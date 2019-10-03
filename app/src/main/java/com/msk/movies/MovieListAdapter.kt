@@ -52,8 +52,8 @@ class MovieListAdapter() :
     }
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        internal val name: TextView = itemView.findViewById<View>(R.id.nameVal) as TextView
-        internal val year: TextView = itemView.findViewById<View>(R.id.yearVal) as TextView
-        internal val movieImageView: ImageView = itemView.findViewById<View>(R.id.movieImage) as ImageView
+        internal val name: TextView = itemView.findViewById<View>(R.id.media_title) as TextView
+        internal val year: TextView = itemView.findViewById<View>(R.id.media_year) as TextView
+        internal val movieImageView: ImageView = itemView.findViewById<View>(R.id.media_image) as ImageView
     }
 }
