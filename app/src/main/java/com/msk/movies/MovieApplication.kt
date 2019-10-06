@@ -1,4 +1,4 @@
-package com.noon.movies
+package com.msk.movies
 
 import android.app.Activity
 import android.app.Application

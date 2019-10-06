@@ -16,11 +16,11 @@ import androidx.navigation.Navigation
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.khan.movieskotlin.MovieListAdapter
-import com.khan.movieskotlin.MovieListViewModel
-import com.khan.movieskotlin.MovieUtils
-import com.khan.movieskotlin.model.SearchItem
+import com.msk.movies.MovieListAdapter
+import com.msk.movies.MovieListViewModel
+import com.msk.movies.MovieUtils
 import com.msk.movies.R
+import com.msk.movies.model.SearchItem
 import com.msk.movies.util.OnItemClickListener
 import com.msk.movies.util.ViewModelFactory
 import com.msk.movies.util.addOnItemClickListener

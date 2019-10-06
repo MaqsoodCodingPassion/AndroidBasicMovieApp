@@ -1,4 +1,4 @@
-package com.khan.movieskotlin.di.module
+package com.msk.movies.di.module
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson

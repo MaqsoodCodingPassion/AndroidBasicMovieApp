@@ -1,4 +1,4 @@
-package com.noonacademy.assignment.omdb.movies.model
+package com.msk.movies.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

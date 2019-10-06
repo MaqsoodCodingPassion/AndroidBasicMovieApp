@@ -1,10 +1,11 @@
-package com.khan.movieskotlin
+package com.msk.movies
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
-import com.khan.movieskotlin.model.SearchItem
+import com.msk.movies.MovieListRepository
 import com.msk.movies.model.MovieDetailsResponse
+import com.msk.movies.model.SearchItem
 
 class MovieListViewModel(val movieListRepository: MovieListRepository) : ViewModel() {
 

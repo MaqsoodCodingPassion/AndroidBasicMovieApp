@@ -1,7 +1,7 @@
 package com.msk.movies.service
 
-import com.khan.movieskotlin.model.MoviesListResponse
 import com.msk.movies.model.MovieDetailsResponse
+import com.msk.movies.model.MoviesListResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

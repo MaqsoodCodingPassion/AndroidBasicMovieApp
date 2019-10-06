@@ -1,6 +1,7 @@
-package com.khan.movieskotlin.model
+package com.msk.movies.model
 
 import com.google.gson.annotations.SerializedName
+import com.msk.movies.model.SearchItem
 
 import java.util.ArrayList
 

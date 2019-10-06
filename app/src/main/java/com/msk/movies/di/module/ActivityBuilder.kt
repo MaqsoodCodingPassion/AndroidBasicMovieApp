@@ -1,4 +1,4 @@
-package com.khan.movieskotlin.di.module
+package com.msk.movies.di.module
 
 import com.msk.movies.MainActivity
 import dagger.Module

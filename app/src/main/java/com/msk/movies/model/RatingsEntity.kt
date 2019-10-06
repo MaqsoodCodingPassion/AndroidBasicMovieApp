@@ -1,4 +1,4 @@
-package com.noonacademy.assignment.omdb.movies.model
+package com.msk.movies.model
 import com.google.gson.annotations.SerializedName
 
 data class RatingsEntity constructor(

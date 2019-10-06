@@ -2,8 +2,8 @@ package com.msk.movies.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.khan.movieskotlin.MovieListRepository
-import com.khan.movieskotlin.MovieListViewModel
+import com.msk.movies.MovieListRepository
+import com.msk.movies.MovieListViewModel
 import javax.inject.Inject
 
 class ViewModelFactory

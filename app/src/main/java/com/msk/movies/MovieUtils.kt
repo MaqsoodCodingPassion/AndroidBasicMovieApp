@@ -1,4 +1,4 @@
-package com.khan.movieskotlin
+package com.msk.movies
 
 import android.app.Activity
 import android.content.Context

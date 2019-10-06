@@ -1,13 +1,12 @@
-package com.khan.movieskotlin
+package com.msk.movies
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.architecture.paging.MovieDataSourceFactory
-import com.khan.movieskotlin.model.MoviesListResponse
-import com.khan.movieskotlin.model.SearchItem
+import com.msk.movies.dataSource.MovieDataSourceFactory
 import com.msk.movies.model.MovieDetailsResponse
+import com.msk.movies.model.SearchItem
 import com.msk.movies.service.Service
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

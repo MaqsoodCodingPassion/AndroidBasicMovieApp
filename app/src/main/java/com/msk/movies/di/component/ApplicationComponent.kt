@@ -1,10 +1,10 @@
 package com.msk.movies.di.component
 
-import com.khan.movieskotlin.di.module.ActivityBuilder
-import com.khan.movieskotlin.di.module.ApplicationModule
-import com.khan.movieskotlin.di.module.NetworkModule
+import com.msk.movies.MovieApplication
+import com.msk.movies.di.module.ActivityBuilder
+import com.msk.movies.di.module.ApplicationModule
 import com.msk.movies.di.module.FragmentModule
-import com.noon.movies.MovieApplication
+import com.msk.movies.di.module.NetworkModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule

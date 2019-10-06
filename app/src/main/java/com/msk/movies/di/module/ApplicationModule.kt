@@ -1,9 +1,9 @@
-package com.khan.movieskotlin.di.module
+package com.msk.movies.di.module
 
-import com.khan.movieskotlin.MovieListRepository
+import com.msk.movies.MovieApplication
+import com.msk.movies.MovieListRepository
 import com.msk.movies.di.BaseUrl
 import com.msk.movies.service.Service
-import com.noon.movies.MovieApplication
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

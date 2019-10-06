@@ -1,8 +1,8 @@
-package com.architecture.paging
+package com.msk.movies.dataSource
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
-import com.khan.movieskotlin.model.SearchItem
+import com.msk.movies.model.SearchItem
 import com.msk.movies.service.Service
 import io.reactivex.disposables.CompositeDisposable
 
