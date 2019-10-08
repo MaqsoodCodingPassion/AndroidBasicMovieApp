@@ -9,13 +9,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.msk.movies.BookMarkMovieAdapter
 import com.msk.movies.MovieListViewModel
 import com.msk.movies.MovieUtils
 import com.msk.movies.R
+import com.msk.movies.model.MediaEntity
 import com.msk.movies.util.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.activity_movie_details.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_movie_details.*
 import kotlinx.android.synthetic.main.layout_movie_detail_body.*
 import kotlinx.android.synthetic.main.layout_movie_detail_header.*
@@ -49,6 +53,10 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        bookmark.setOnClickListener {
+            mViewModel.bookMarkMovie(arguments?.getString("imdbID")!!)
+            bookmark.visibility = View.GONE
+        }
         /*Glide.with(context)
             .load(arguments?.getString("POSTER_URL"))
             .into(posterImageView)*/

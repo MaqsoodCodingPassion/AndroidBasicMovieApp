@@ -16,10 +16,8 @@ import androidx.navigation.Navigation
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.msk.movies.MovieListAdapter
-import com.msk.movies.MovieListViewModel
-import com.msk.movies.MovieUtils
-import com.msk.movies.R
+import com.msk.movies.*
+import com.msk.movies.model.MediaEntity
 import com.msk.movies.model.SearchItem
 import com.msk.movies.util.OnItemClickListener
 import com.msk.movies.util.ViewModelFactory
@@ -58,6 +56,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
         initAdapter()
+        initBookMarkAdapter()
         initSearchView()
     }
 
@@ -72,12 +71,34 @@ class HomeFragment : Fragment() {
                 //imdbID
                 var bundle = Bundle()
                 bundle.putString("POSTER_URL",mSearchItemList?.get(position)?.poster)
-                bundle.putString("imdbID",mSearchItemList?.get(position)?.imdbID)
+                bundle.putString("imdbID",mSearchItemList?.get(position)?.imdbid)
                // var bundle = bundleOf("POSTER_URL" to mSearchItemList?.get(position)?.poster)
                 navController!!.navigate(R.id.action_fragmentHome_to_movieDetails,bundle)
             }
         })
     }
+
+    private fun initBookMarkAdapter() {
+        val bookMarkAdapter = BookMarkMovieAdapter(listOf(),mViewModel)
+        bookmarkedMovies.adapter = bookMarkAdapter
+        bookmarkedMovies.layoutManager = LinearLayoutManager(context,
+            LinearLayoutManager.HORIZONTAL, false)
+
+        mViewModel.getBookMarkedMovies()
+        mViewModel.bookMarkLiveData?.observe(this, Observer<List<SearchItem>?> {
+            showOrHideBookmarks(it?.size == 0)
+            it?.let { bookMarkAdapter.notifyDataSet(it) }
+        })
+    }
+
+    private fun showOrHideBookmarks(show: Boolean) {
+        if (show) {
+            bookmarkedMovies.visibility = View.GONE
+        } else {
+            bookmarkedMovies.visibility = View.VISIBLE
+        }
+    }
+
 
     private fun initSearchView() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
@@ -98,8 +119,10 @@ class HomeFragment : Fragment() {
     private fun callSearchMovieAPI(movieName: String?) {
         mViewModel.getMovieList(movieName!!, MovieUtils.MOVIE_API_KEY).observe(this, Observer {
             if(it.size > 0){
+                System.out.println("********* Val is : "+it.size)
                 mSearchItemList = it
                 mMovieListAdapter!!.submitList(it)
+
             }else{
                 resetList()
                 MovieUtils.showErrorDialog(activity!!, resources.getString(R.string.movie_not_found))

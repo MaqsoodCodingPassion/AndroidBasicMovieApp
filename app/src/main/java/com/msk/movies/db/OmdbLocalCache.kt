@@ -2,9 +2,9 @@ package com.msk.movies.db
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
-import com.msk.movies.model.MediaEntity
+import androidx.paging.PagedList
+import com.msk.movies.model.SearchItem
 import java.util.concurrent.Executor
 
 /**
@@ -19,10 +19,12 @@ class OmdbLocalCache(
     /**
      * Insert a list of repos in the database, on a background thread.
      */
-    fun insertMedia(repos: List<MediaEntity>, insertFinished: () -> Unit) {
+    fun insertMedia(repos: PagedList<SearchItem>, insertFinished: () -> Unit) {
         ioExecutor.execute {
-            Log.d("OmdbLocalCache", "inserting ${repos.size} repos")
-            mediaDao.insertAll(repos)
+            Log.d("OmdbLocalCache", "inserting ${repos?.size} repos")
+            if (repos != null) {
+                mediaDao.insertAll(repos)
+            }
             insertFinished()
         }
     }
@@ -30,7 +32,7 @@ class OmdbLocalCache(
     /**
      * Insert a single record in the database, on a background thread.
      */
-    fun insertMovie(repos: MediaEntity, insertFinished: () -> Unit) {
+    fun insertMovie(repos: SearchItem, insertFinished: () -> Unit) {
         ioExecutor.execute {
             Log.d("OmdbLocalCache", "inserting ${repos.title} repos")
             mediaDao.insertMedia(repos)
@@ -48,15 +50,15 @@ class OmdbLocalCache(
     }
 
 
-    fun moviesByName(name: String): DataSource.Factory<Int, MediaEntity> {
+    fun moviesByName(name: String): DataSource.Factory<Int, SearchItem> {
         return mediaDao.loadMediaFromSearch(name)
     }
 
-    fun moviesByMediaId(name: String): MediaEntity {
+    fun moviesByMediaId(name: String): SearchItem {
         return mediaDao.loadMedia(name)
     }
 
-    fun getBookMarkedMovies(): LiveData<List<MediaEntity>> {
+    fun getBookMarkedMovies(): LiveData<List<SearchItem>> {
         return mediaDao.loadBookMarkedMedia(true)
     }
 

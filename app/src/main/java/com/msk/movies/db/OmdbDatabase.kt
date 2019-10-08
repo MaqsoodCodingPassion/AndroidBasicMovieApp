@@ -21,14 +21,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.msk.movies.model.MediaEntity
 import com.msk.movies.model.RatingsConverter
+import com.msk.movies.model.SearchItem
 
 /**
  * Database schema that holds the list of repos.
  */
 @Database(
-        entities = [MediaEntity::class],
+        entities = [SearchItem::class],
         version = 1,
         exportSchema = false
 )

@@ -8,7 +8,7 @@ import androidx.appcompat.app.AlertDialog
 object MovieUtils {
 
     val MOVIE_API_KEY = "5fcbd29c"
-    val DEFAULT_SEARCH_MOVIE_NAME = "friends"
+    val DEFAULT_SEARCH_MOVIE_NAME = "Jack"
 
     fun hideKeyboard(activity: Activity) {
         val view = activity.currentFocus

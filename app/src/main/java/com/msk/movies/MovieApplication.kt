@@ -5,6 +5,7 @@ import android.app.Application
 import androidx.fragment.app.Fragment
 import com.facebook.stetho.Stetho
 import com.msk.movies.di.component.DaggerApplicationComponent
+import com.msk.movies.di.module.ContextModule
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
