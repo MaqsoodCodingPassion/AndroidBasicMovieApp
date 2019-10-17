@@ -4,17 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.gojek.assignment.db.MediaDao
 import com.msk.movies.dataSource.MovieDataSourceFactory
-import com.msk.movies.model.MovieDetailsResponse
+import com.msk.movies.model.MediaEntity
 import com.msk.movies.model.SearchItem
 import com.msk.movies.service.Service
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class MovieListRepository @Inject constructor(private val service: Service) {
+class MovieListRepository @Inject constructor(private val service: Service,
+                                              private val daoRepo: MediaDao) {
 
     lateinit var newsList: LiveData<PagedList<SearchItem>>
     private val compositeDisposable = CompositeDisposable()
@@ -32,21 +33,34 @@ class MovieListRepository @Inject constructor(private val service: Service) {
         return newsList
     }
 
-    fun fetchMovieDetails(movieName: String, plot: String,key: String): MutableLiveData<MovieDetailsResponse> {
 
-        val moviesListResponse: MutableLiveData<MovieDetailsResponse> = MutableLiveData()
-        val observable = service.getMovieDetails(movieName, plot,key)
+    fun fetchMovieDetails(movieName: String, plot: String, key: String): MutableLiveData<MediaEntity> {
 
-        observable?.subscribeOn(Schedulers.newThread())?.observeOn(AndroidSchedulers.mainThread())
-            ?.map<MovieDetailsResponse> { it!! }
-            ?.subscribe(
-                Consumer<MovieDetailsResponse> {
+        val moviesListResponse: MutableLiveData<MediaEntity> = MutableLiveData()
+        val observable = service.getMovieDetails(movieName, plot, key)
+
+        observable.map<MediaEntity> {
+            saveGithubRepoRecords(it)
+            it
+        }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
                     moviesListResponse.value = it
                 },
-                Consumer<Throwable> {
-                    it.printStackTrace()
+                {
+                    moviesListResponse.value = null
                 })
 
         return moviesListResponse
     }
+
+    private fun saveGithubRepoRecords(movieDetails: MediaEntity) {
+        daoRepo.saveMovieDetailsRecord(movieDetails)
+    }
+
+   /* fun getGitHubRepositoryListFromDb(): LiveData<List<MediaEntity>> {
+        return daoRepo.loadGithubRepoData();
+    }*/
+
 }

@@ -1,6 +1,6 @@
 package com.msk.movies.service
 
-import com.msk.movies.model.MovieDetailsResponse
+import com.msk.movies.model.MediaEntity
 import com.msk.movies.model.MoviesListResponse
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -17,5 +17,5 @@ interface Service {
 
     @GET("/")
     fun getMovieDetails(
-        @Query("i") id: String, @Query("plot") plot: String, @Query("apikey") key: String): Single<MovieDetailsResponse>
+        @Query("i") id: String, @Query("plot") plot: String, @Query("apikey") key: String): Single<MediaEntity>
 }

@@ -1,6 +1,5 @@
 package com.msk.movies.fragments
 
-
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +15,6 @@ import com.msk.movies.R
 import com.msk.movies.util.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.activity_movie_details.*
-import kotlinx.android.synthetic.main.fragment_movie_details.*
 import kotlinx.android.synthetic.main.layout_movie_detail_body.*
 import kotlinx.android.synthetic.main.layout_movie_detail_header.*
 import javax.inject.Inject

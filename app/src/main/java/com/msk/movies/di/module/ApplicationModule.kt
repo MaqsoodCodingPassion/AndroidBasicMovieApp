@@ -1,20 +1,16 @@
 package com.msk.movies.di.module
 
+import androidx.room.Room
+import com.gojek.assignment.db.MediaDao
+import com.gojek.assignment.db.MediaDatabase
 import com.msk.movies.MovieApplication
-import com.msk.movies.MovieListRepository
 import com.msk.movies.di.BaseUrl
-import com.msk.movies.service.Service
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
 class ApplicationModule {
-
-    @Provides
-    fun provideContext(application: MovieApplication): MovieApplication {
-        return application
-    }
 
     @Provides
     @BaseUrl
@@ -24,7 +20,13 @@ class ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideMovieRepository(service: Service): MovieListRepository {
-        return MovieListRepository(service)
+    fun provideGithubDatabase(application: MovieApplication): MediaDatabase {
+        return Room.databaseBuilder(application, MediaDatabase::class.java, "media.db").build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideGithubRepoDao(githubDatabase: MediaDatabase): MediaDao {
+        return githubDatabase.githubRepoDao()
     }
 }

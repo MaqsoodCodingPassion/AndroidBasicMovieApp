@@ -66,31 +66,13 @@ class HomeFragment : Fragment() {
         }
         movieRecyclerView.addOnItemClickListener(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                //imdbID
                 var bundle = Bundle()
                 bundle.putString("POSTER_URL",mSearchItemList?.get(position)?.poster)
                 bundle.putString("imdbID",mSearchItemList?.get(position)?.imdbID)
-               // var bundle = bundleOf("POSTER_URL" to mSearchItemList?.get(position)?.poster)
-                navController!!.navigate(R.id.action_fragmentHome_to_movieDetails,bundle)
+                navController.navigate(R.id.action_fragmentHome_to_movieDetails,bundle)
             }
         })
     }
-
-    /*private fun initSearchView() {
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-            android.widget.SearchView.OnQueryTextListener {
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                return false
-            }
-            override fun onQueryTextSubmit(query: String): Boolean {
-                MovieUtils.hideKeyboard(activity!!)
-                resetList()
-                callSearchMovieAPI(query)
-                return false
-            }
-        })
-    }*/
 
     private fun callSearchMovieAPI(movieName: String?) {
         mViewModel.getMovieList(movieName!!, MovieUtils.MOVIE_API_KEY).observe(this, Observer {

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="23dp"
         android:text="@string/label_runtime"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_color"
         android:textSize="20sp"
         android:textStyle="bold" />
     <TextView
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/row_item_margin"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_color"
         android:textSize="14sp"
         tools:text="Movie" />
 
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_23"
         android:text="@string/label_casting"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/textsize_20"
         android:textStyle="bold" />
     <TextView
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/row_item_margin"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/textsize_14"
         tools:text="Casting" />
 
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_23"
         android:text="@string/label_production"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/textsize_20"
         android:textStyle="bold" />
     <TextView
@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/textsize_14"
         tools:text="someone" />
 
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_23"
         android:text="@string/label_metascore"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/textsize_20"
         android:textStyle="bold" />
     <TextView
@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/textsize_14"
         tools:text="Metascore" />
 
@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_23"
         android:text="@string/label_synopsis"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/textsize_20"
         android:textStyle="bold" />
     <TextView
@@ -89,7 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/row_item_margin"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/textsize_14"
         tools:text="Synopsis" />
 
@@ -101,7 +101,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_23"
         android:text="Reviews"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/textsize_20"
         android:textStyle="bold"
         android:visibility="gone"
