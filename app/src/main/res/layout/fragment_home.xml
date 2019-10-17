@@ -10,8 +10,8 @@
         android:id="@+id/movieRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingVertical="@dimen/margin_6"
         android:scrollbars="vertical"
+        android:padding="@dimen/margin_6"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,19 +23,7 @@
         android:id="@+id/bookmarkedMovies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_6"
-        android:padding="@dimen/margin_6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
-
-        <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:iconifiedByDefault="false"
-            android:queryHint="@string/movie_name_hint"
-            tools:ignore="MissingConstraints">
-        </SearchView>
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

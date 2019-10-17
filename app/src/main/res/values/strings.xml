@@ -15,7 +15,6 @@
 
     <string name="search_title">Search</string>
     <string name="reload_title">Reload</string>
-    <string name="search_hint">Find Movies, Tv Shows&#8230;</string>
 
     <string name="label_release_date">Release Date :</string>
     <string name="label_imdb_rated">Ratings :</string>
@@ -31,4 +30,8 @@
     <string name="na">N/A</string>
     <string name="MovieDetail">MovieDetail</string>
     <string name="bookmark">Bookmark</string>
+
+    <string name="toolbar_title">Contacts</string>
+    <string name="action_search">Search</string>
+    <string name="search_hint">Type name…</string>
 </resources>

@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/size_150"
-    android:layout_marginStart="@dimen/margin_8"
-    android:layout_marginTop="@dimen/margin_8"
-    android:layout_marginEnd="@dimen/margin_8">
+    android:layout_height="@dimen/size_120"
+    android:padding="4dp"
+    android:layout_marginStart="@dimen/margin_4"
+    android:layout_marginTop="@dimen/margin_4"
+    android:layout_marginEnd="@dimen/margin_4">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
         <ImageView
             android:id="@+id/media_image"
             android:layout_width="@dimen/size_120"
-            android:layout_height="@dimen/size_150"
+            android:layout_height="@dimen/size_120"
             android:scaleType="centerCrop"
             android:src="@drawable/default_poster"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +52,8 @@
             android:textColor="@color/text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/media_image"
-            tools:text="Movie" />
+            tools:text="Movie"
+            android:layout_marginLeft="@dimen/medium_margin" />
 
         <TextView
             android:id="@+id/media_year"
@@ -64,7 +66,8 @@
             android:textColor="@color/text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="1987" />
+            tools:text="1987"
+            android:layout_marginRight="@dimen/medium_margin" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

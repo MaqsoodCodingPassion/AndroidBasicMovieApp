@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -58,7 +56,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
         initAdapter()
-        initSearchView()
     }
 
     private fun initAdapter() {
@@ -79,7 +76,7 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun initSearchView() {
+    /*private fun initSearchView() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             android.widget.SearchView.OnQueryTextListener {
 
@@ -93,7 +90,7 @@ class HomeFragment : Fragment() {
                 return false
             }
         })
-    }
+    }*/
 
     private fun callSearchMovieAPI(movieName: String?) {
         mViewModel.getMovieList(movieName!!, MovieUtils.MOVIE_API_KEY).observe(this, Observer {
