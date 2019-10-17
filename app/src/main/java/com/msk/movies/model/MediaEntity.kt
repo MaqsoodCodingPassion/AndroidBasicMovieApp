@@ -84,6 +84,8 @@ class MediaEntity {
 
     @SerializedName("Writer")
     var writer: String? = null
+
+    var bookmark:Boolean = false
 }
 
 data class RatingsEntity constructor(

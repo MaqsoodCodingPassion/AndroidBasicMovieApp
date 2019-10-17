@@ -18,6 +18,8 @@ import com.msk.movies.MovieListAdapter
 import com.msk.movies.MovieListViewModel
 import com.msk.movies.MovieUtils
 import com.msk.movies.R
+import com.msk.movies.bookmark.BookMarkMovieAdapter
+import com.msk.movies.model.MediaEntity
 import com.msk.movies.model.SearchItem
 import com.msk.movies.util.OnItemClickListener
 import com.msk.movies.util.ViewModelFactory
@@ -34,6 +36,7 @@ class HomeFragment : Fragment() {
     private var mMovieListAdapter: MovieListAdapter? = null
     private var mSearchItemList : PagedList<SearchItem>? = null
     private var mView: View? = null
+    private var mBookMarkAdapter : BookMarkMovieAdapter? = null
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -63,7 +66,19 @@ class HomeFragment : Fragment() {
             mMovieListAdapter = MovieListAdapter()
             movieRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             movieRecyclerView.adapter = mMovieListAdapter
+
+            mBookMarkAdapter = BookMarkMovieAdapter(listOf(),mViewModel)
+            bookmarkedMovies.adapter = mBookMarkAdapter
+            bookmarkedMovies.layoutManager = LinearLayoutManager(context,
+                LinearLayoutManager.HORIZONTAL, false)
         }
+
+        mViewModel.getBookMarkedMovies()
+        mViewModel.bookMarkLiveData.observe(this, Observer<List<MediaEntity>?> {
+            showOrHideBookmarks(it?.size == 0)
+            it?.let { mBookMarkAdapter?.notifyDataSet(it) }
+        })
+
         movieRecyclerView.addOnItemClickListener(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
                 var bundle = Bundle()
@@ -72,6 +87,14 @@ class HomeFragment : Fragment() {
                 navController.navigate(R.id.action_fragmentHome_to_movieDetails,bundle)
             }
         })
+    }
+
+    private fun showOrHideBookmarks(show: Boolean) {
+        if (show) {
+            bookmarkedMovies.visibility = View.GONE
+        } else {
+            bookmarkedMovies.visibility = View.VISIBLE
+        }
     }
 
     private fun callSearchMovieAPI(movieName: String?) {

@@ -11,7 +11,6 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.msk.movies.R
 import com.msk.movies.model.SearchItem
 
 class MovieListAdapter() :

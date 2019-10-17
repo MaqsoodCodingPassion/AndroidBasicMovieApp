@@ -28,6 +28,7 @@ class MovieDetailsFragment : Fragment() {
 
     private lateinit var mViewModel: MovieListViewModel
 
+    private var movieId : String? = null
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -35,21 +36,21 @@ class MovieDetailsFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
+        movieId = arguments?.getString("imdbID")
         if(mView==null){
             mViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel::class.java)
             mView = inflater.inflate(R.layout.activity_movie_details, container, false)
-            callSearchMovieAPI(arguments?.getString("imdbID"))
+            callSearchMovieAPI(movieId)
         }
         return mView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        /*Glide.with(context)
-            .load(arguments?.getString("POSTER_URL"))
-            .into(posterImageView)*/
+        bookmark.setOnClickListener {
+            mViewModel.bookMarkMovie(movieId!!)
+            bookmark.visibility = View.GONE
+        }
     }
 
     private fun callSearchMovieAPI(imdbID: String?) {
@@ -62,6 +63,11 @@ class MovieDetailsFragment : Fragment() {
             production.text = it.production
             type.text = it.runtime
             synopsis.text = it.plot
+            if(it.bookmark){
+                bookmark.visibility = View.GONE
+            }else{
+                bookmark.visibility = View.VISIBLE
+            }
             val mPoster = it.poster
             if (mPoster!!.isNotEmpty() && mPoster != getString(R.string.na)) {
                 Glide.with(context)

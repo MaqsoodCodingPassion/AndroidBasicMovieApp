@@ -17,4 +17,15 @@ interface MediaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveMovieDetailsRecord(movieDetails: MediaEntity)
 
+    @Query("select * from media where imdbid = :mediaId")
+    fun loadMedia(mediaId: String): MediaEntity
+
+    @Query("UPDATE media SET bookmark=:bookmarked WHERE imdbid = :mediaId")
+    fun updateMovieWithBookMark(bookmarked: Boolean, mediaId: String)
+
+    @Query("select * from media where bookmark = :isBookmarked")
+    fun loadBookMarkedList(isBookmarked:Boolean): LiveData<List<MediaEntity>>
+
+    @Query("DELETE FROM media WHERE imdbid = :mediaId")
+    fun deleteMovie(mediaId: String)
 }

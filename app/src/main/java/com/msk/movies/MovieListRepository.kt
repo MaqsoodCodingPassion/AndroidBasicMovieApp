@@ -40,7 +40,7 @@ class MovieListRepository @Inject constructor(private val service: Service,
         val observable = service.getMovieDetails(movieName, plot, key)
 
         observable.map<MediaEntity> {
-            saveGithubRepoRecords(it)
+            saveMovieDetailsRecord(it)
             it
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -55,12 +55,24 @@ class MovieListRepository @Inject constructor(private val service: Service,
         return moviesListResponse
     }
 
-    private fun saveGithubRepoRecords(movieDetails: MediaEntity) {
+    private fun saveMovieDetailsRecord(movieDetails: MediaEntity) {
         daoRepo.saveMovieDetailsRecord(movieDetails)
     }
 
-   /* fun getGitHubRepositoryListFromDb(): LiveData<List<MediaEntity>> {
-        return daoRepo.loadGithubRepoData();
-    }*/
+    fun getEntity(mediaId: String) {
+        daoRepo.loadMedia(mediaId)
+    }
 
+    fun getBookMarkedMovies(): LiveData<List<MediaEntity>> {
+        return daoRepo.loadGithubRepoData();
+    }
+
+    fun bookMarkMovie(mediaId: String,bookMarked:Boolean=true) {
+        daoRepo.updateMovieWithBookMark(bookMarked,mediaId)
+    }
+
+    fun deleteEntity(movieId: String) {
+        daoRepo.deleteMovie(movieId)
+        daoRepo.loadBookMarkedList(true)
+    }
 }
