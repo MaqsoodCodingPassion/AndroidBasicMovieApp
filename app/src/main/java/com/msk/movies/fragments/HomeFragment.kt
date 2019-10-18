@@ -69,7 +69,11 @@ class HomeFragment : Fragment() {
             movieRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             movieRecyclerView.adapter = mMovieListAdapter
 
-            mBookMarkAdapter = BookMarkMovieAdapter(listOf(),mViewModel)
+            mBookMarkAdapter = BookMarkMovieAdapter(listOf(),mViewModel){
+                var bundle = Bundle()
+                bundle.putString("imdbID",it?.imdbID)
+                navController.navigate(R.id.action_fragmentHome_to_movieDetails,bundle)
+            }
             bookmarkedMovies.adapter = mBookMarkAdapter
             bookmarkedMovies.layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.HORIZONTAL, false)

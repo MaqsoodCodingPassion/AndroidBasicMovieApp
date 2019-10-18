@@ -10,7 +10,8 @@ import com.msk.movies.model.MediaEntity
  */
 class BookMarkMovieAdapter(
     private var items: List<MediaEntity>,
-    private val mViewModel: MovieListViewModel
+    private val mViewModel: MovieListViewModel,
+    val onClicked: (entity: MediaEntity) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = items.size
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -24,6 +25,9 @@ class BookMarkMovieAdapter(
             bookMarkViewHolder.bind(bookmarkedMovie)
             bookMarkViewHolder.deleteBookMark.setOnClickListener {
                 mViewModel.deleteMovie(bookmarkedMovie.imdbID)
+            }
+            bookMarkViewHolder.mediaPoster.setOnClickListener {
+                onClicked(bookmarkedMovie)
             }
         }
     }
