@@ -9,5 +9,5 @@ import com.msk.movies.model.RatingsConverter
 @TypeConverters(RatingsConverter::class)
 @Database(entities = [MediaEntity::class], version = 1,exportSchema = false)
 abstract class MediaDatabase : RoomDatabase() {
-    abstract fun githubRepoDao(): MediaDao
+    abstract fun mediaDao(): MediaDao
 }

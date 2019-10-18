@@ -4,9 +4,11 @@ import androidx.room.Room
 import com.gojek.assignment.db.MediaDao
 import com.gojek.assignment.db.MediaDatabase
 import com.msk.movies.MovieApplication
+import com.msk.movies.db.OmdbLocalCache
 import com.msk.movies.di.BaseUrl
 import dagger.Module
 import dagger.Provides
+import java.util.concurrent.Executors
 import javax.inject.Singleton
 
 @Module
@@ -27,6 +29,12 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun provideGithubRepoDao(githubDatabase: MediaDatabase): MediaDao {
-        return githubDatabase.githubRepoDao()
+        return githubDatabase.mediaDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCache(database: MediaDatabase): OmdbLocalCache {
+        return OmdbLocalCache(database.mediaDao(), Executors.newSingleThreadExecutor())
     }
 }

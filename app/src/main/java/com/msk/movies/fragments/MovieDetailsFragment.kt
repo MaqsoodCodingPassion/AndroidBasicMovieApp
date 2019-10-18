@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.msk.movies.MovieListViewModel
 import com.msk.movies.MovieUtils
 import com.msk.movies.R
+import com.msk.movies.model.MediaEntity
 import com.msk.movies.util.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.activity_movie_details.*
@@ -28,17 +29,24 @@ class MovieDetailsFragment : Fragment() {
 
     private lateinit var mViewModel: MovieListViewModel
 
-    private var movieId : String? = null
+    private var movieId: String? = null
+
+    private lateinit var mediaEntity: MediaEntity
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         movieId = arguments?.getString("imdbID")
-        if(mView==null){
-            mViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel::class.java)
+        if (mView == null) {
+            mViewModel =
+                ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel::class.java)
             mView = inflater.inflate(R.layout.activity_movie_details, container, false)
             callSearchMovieAPI(movieId)
         }
@@ -47,33 +55,40 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        var entityLiveData = mViewModel.getEntity(movieId!!)
+        entityLiveData.observe(this, Observer {
+            try {
+                if (it.imdbID.equals(movieId)) {
+                    bookmark.visibility = View.GONE
+                }
+            } catch (exp: NullPointerException) { }
+        })
+
         bookmark.setOnClickListener {
-            mViewModel.bookMarkMovie(movieId!!)
+            mViewModel.saveMovieDetailsRecord(mediaEntity)
+            //mViewModel.bookMarkMovie(movieId!!)
             bookmark.visibility = View.GONE
         }
     }
 
     private fun callSearchMovieAPI(imdbID: String?) {
-        mViewModel.fetchMovieDetails(imdbID!!, "full", MovieUtils.MOVIE_API_KEY).observe(this, Observer {
-
-            media_title.text = it.title
-            release_date.text = "Imdb : "+it.imdbRating
-            metascore.text = it.metascore
-            casting.text = it.actors
-            production.text = it.production
-            type.text = it.runtime
-            synopsis.text = it.plot
-            if(it.bookmark){
-                bookmark.visibility = View.GONE
-            }else{
-                bookmark.visibility = View.VISIBLE
-            }
-            val mPoster = it.poster
-            if (mPoster!!.isNotEmpty() && mPoster != getString(R.string.na)) {
-                Glide.with(context)
-                    .load(mPoster)
-                    .into(media_image)
-            }
-        })
+        mViewModel.fetchMovieDetails(imdbID!!, "full", MovieUtils.MOVIE_API_KEY)
+            .observe(this, Observer {
+                mediaEntity = it
+                media_title.text = it.title
+                release_date.text = "Imdb : " + it.imdbRating
+                metascore.text = it.metascore
+                casting.text = it.actors
+                production.text = it.production
+                type.text = it.runtime
+                synopsis.text = it.plot
+                val mPoster = it.poster
+                if (mPoster!!.isNotEmpty() && mPoster != getString(R.string.na)) {
+                    Glide.with(context)
+                        .load(mPoster)
+                        .into(media_image)
+                }
+            })
     }
 }

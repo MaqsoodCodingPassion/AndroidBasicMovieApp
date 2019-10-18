@@ -6,6 +6,7 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.gojek.assignment.db.MediaDao
 import com.msk.movies.dataSource.MovieDataSourceFactory
+import com.msk.movies.db.OmdbLocalCache
 import com.msk.movies.model.MediaEntity
 import com.msk.movies.model.SearchItem
 import com.msk.movies.service.Service
@@ -15,7 +16,8 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MovieListRepository @Inject constructor(private val service: Service,
-                                              private val daoRepo: MediaDao) {
+                                              private val daoRepo: MediaDao,
+                                              private val cache: OmdbLocalCache) {
 
     lateinit var newsList: LiveData<PagedList<SearchItem>>
     private val compositeDisposable = CompositeDisposable()
@@ -40,7 +42,7 @@ class MovieListRepository @Inject constructor(private val service: Service,
         val observable = service.getMovieDetails(movieName, plot, key)
 
         observable.map<MediaEntity> {
-            saveMovieDetailsRecord(it)
+            //saveMovieDetailsRecord(it)
             it
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -55,24 +57,23 @@ class MovieListRepository @Inject constructor(private val service: Service,
         return moviesListResponse
     }
 
-    private fun saveMovieDetailsRecord(movieDetails: MediaEntity) {
-        daoRepo.saveMovieDetailsRecord(movieDetails)
+    fun saveMovieDetailsRecord(movieDetails: MediaEntity) {
+        cache.insertMovie(movieDetails)
     }
 
-    fun getEntity(mediaId: String) {
-        daoRepo.loadMedia(mediaId)
+    fun getEntity(mediaId: String) : LiveData<MediaEntity> {
+        return cache.movieByMediaId(mediaId)
     }
 
     fun getBookMarkedMovies(): LiveData<List<MediaEntity>> {
-        return daoRepo.loadGithubRepoData();
+        return cache.getBookMarkedMovies()
     }
 
-    fun bookMarkMovie(mediaId: String,bookMarked:Boolean=true) {
-        daoRepo.updateMovieWithBookMark(bookMarked,mediaId)
+    fun bookMarkMovie(mediaId: String) {
+        cache.updateMovieWithBookMark(mediaId)
     }
 
     fun deleteEntity(movieId: String) {
-        daoRepo.deleteMovie(movieId)
-        daoRepo.loadBookMarkedList(true)
+        cache.deleteRecordById(movieId)
     }
 }

@@ -18,8 +18,8 @@ class MovieListViewModel(val repository: MovieListRepository) : ViewModel() {
         return repository.fetchMovieDetails(imdbID, plot,key)
     }
 
-    fun getEntity(movieId: String) {
-        repository.getEntity(movieId)
+    fun getEntity(movieId: String): LiveData<MediaEntity>{
+        return repository.getEntity(movieId)
     }
 
     fun bookMarkMovie(movieId: String) {
@@ -32,5 +32,9 @@ class MovieListViewModel(val repository: MovieListRepository) : ViewModel() {
 
     fun deleteMovie(movieId: String?) {
         repository.deleteEntity(movieId!!)
+    }
+
+    fun saveMovieDetailsRecord(mediaEntity: MediaEntity) {
+        repository.saveMovieDetailsRecord(mediaEntity)
     }
 }
