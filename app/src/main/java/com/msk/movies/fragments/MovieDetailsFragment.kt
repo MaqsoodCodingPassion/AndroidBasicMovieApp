@@ -62,7 +62,8 @@ class MovieDetailsFragment : Fragment() {
                 if (it.imdbID.equals(movieId)) {
                     bookmark.visibility = View.GONE
                 }
-            } catch (exp: NullPointerException) { }
+            } //If DB does not have record then it throw NullPointerException
+            catch (exp: NullPointerException) { }
         })
 
         bookmark.setOnClickListener {

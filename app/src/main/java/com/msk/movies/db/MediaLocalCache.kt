@@ -10,7 +10,7 @@ import java.util.concurrent.Executor
  * Class that handles the DAO local data source. This ensures that methods are triggered on the
  * correct executor.
  */
-class OmdbLocalCache(
+class MediaLocalCache(
     private val mediaDao: MediaDao,
     private val ioExecutor: Executor) {
 
@@ -19,7 +19,7 @@ class OmdbLocalCache(
      */
     fun insertMovie(repos: MediaEntity) {
         ioExecutor.execute {
-            Log.d("OmdbLocalCache", "inserting ${repos.title} repos")
+            Log.d("MediaLocalCache", "inserting ${repos.title} repos")
             mediaDao.saveMovieDetailsRecord(repos)
         }
     }

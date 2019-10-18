@@ -4,7 +4,7 @@ import androidx.room.Room
 import com.gojek.assignment.db.MediaDao
 import com.gojek.assignment.db.MediaDatabase
 import com.msk.movies.MovieApplication
-import com.msk.movies.db.OmdbLocalCache
+import com.msk.movies.db.MediaLocalCache
 import com.msk.movies.di.BaseUrl
 import dagger.Module
 import dagger.Provides
@@ -22,19 +22,19 @@ class ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideGithubDatabase(application: MovieApplication): MediaDatabase {
+    fun provideMediaDatabase(application: MovieApplication): MediaDatabase {
         return Room.databaseBuilder(application, MediaDatabase::class.java, "media.db").build()
     }
 
     @Provides
     @Singleton
-    fun provideGithubRepoDao(githubDatabase: MediaDatabase): MediaDao {
-        return githubDatabase.mediaDao()
+    fun provideMediaDao(database: MediaDatabase): MediaDao {
+        return database.mediaDao()
     }
 
     @Provides
     @Singleton
-    fun provideCache(database: MediaDatabase): OmdbLocalCache {
-        return OmdbLocalCache(database.mediaDao(), Executors.newSingleThreadExecutor())
+    fun provideMediaLocalCache(database: MediaDatabase): MediaLocalCache {
+        return MediaLocalCache(database.mediaDao(), Executors.newSingleThreadExecutor())
     }
 }

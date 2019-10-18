@@ -6,7 +6,7 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.gojek.assignment.db.MediaDao
 import com.msk.movies.dataSource.MovieDataSourceFactory
-import com.msk.movies.db.OmdbLocalCache
+import com.msk.movies.db.MediaLocalCache
 import com.msk.movies.model.MediaEntity
 import com.msk.movies.model.SearchItem
 import com.msk.movies.service.Service
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 class MovieListRepository @Inject constructor(private val service: Service,
                                               private val daoRepo: MediaDao,
-                                              private val cache: OmdbLocalCache) {
+                                              private val cache: MediaLocalCache) {
 
     lateinit var newsList: LiveData<PagedList<SearchItem>>
     private val compositeDisposable = CompositeDisposable()
