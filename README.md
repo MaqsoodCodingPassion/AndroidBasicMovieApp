@@ -2,12 +2,12 @@
 
 This app content about the basic movie details which is implemented in MVVM architecture using:
 
-Jetpack - NavigationController 
-Jetpack - Paging
-Room
-Dagger2
-RxJava2
-Retrofit
+ NavigationController, 
+ Paging, 
+ Room,
+ Dagger2,
+ RxJava2,
+ Retrofit
 
 ![Alt Text](https://i.imgur.com/BrJMTeP.png)
 ![Alt Text](https://i.imgur.com/PiBAYEm.png)
