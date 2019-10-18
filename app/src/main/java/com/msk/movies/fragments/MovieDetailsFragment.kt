@@ -15,7 +15,7 @@ import com.msk.movies.R
 import com.msk.movies.model.MediaEntity
 import com.msk.movies.util.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.activity_movie_details.*
+import kotlinx.android.synthetic.main.fragment_movie_details.*
 import kotlinx.android.synthetic.main.layout_movie_detail_body.*
 import kotlinx.android.synthetic.main.layout_movie_detail_header.*
 import javax.inject.Inject
@@ -47,7 +47,7 @@ class MovieDetailsFragment : Fragment() {
         if (mView == null) {
             mViewModel =
                 ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel::class.java)
-            mView = inflater.inflate(R.layout.activity_movie_details, container, false)
+            mView = inflater.inflate(R.layout.fragment_movie_details, container, false)
             callSearchMovieAPI(movieId)
         }
         return mView

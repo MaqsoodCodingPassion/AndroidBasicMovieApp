@@ -19,7 +19,6 @@
             android:padding="5dp">
 
             <ImageView
-
                 android:id="@+id/poster"
                 android:layout_width="@dimen/size_150"
                 android:layout_height="@dimen/size_150"
