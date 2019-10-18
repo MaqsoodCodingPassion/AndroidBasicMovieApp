@@ -1,9 +1,10 @@
 # AndroidBasicMovieApp
 
-This repository contains a detailed movie sample app that implements MVVM architecture using
+This app content about the basic movie details which is implemented in MVVM architecture using:
 
-Jetpack - NavigationContriller 
+Jetpack - NavigationController 
 Jetpack - Paging
+Room
 Dagger2
 RxJava2
 Retrofit
