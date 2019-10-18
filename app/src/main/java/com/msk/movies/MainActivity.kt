@@ -13,6 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private var searchView: SearchView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -29,8 +31,6 @@ class MainActivity : AppCompatActivity() {
 
         //Getting the Navigation Controller
         navController = Navigation.findNavController(this, R.id.fragment)
-
-        //Setting up the action bar
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
@@ -58,8 +58,9 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onQueryTextSubmit(query: String): Boolean {
                 MovieUtils.hideKeyboard(this@MainActivity)
-                //resetList()
-                //callSearchMovieAPI(query)
+                var bundle = Bundle()
+                bundle.putString("SEARCH_MOVIE",query)
+                navController.navigate(R.id.homeFragment,bundle)
                 return false
             }
         })
@@ -67,18 +68,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
-
-
         return if (id == R.id.action_search) {
             true
         } else super.onOptionsItemSelected(item)
 
     }
-
 
     private fun whiteNotificationBar(view: View) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

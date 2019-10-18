@@ -34,6 +34,4 @@ class BookMarkMovieAdapter(
     }
 
     private fun getItem(position: Int): MediaEntity? = items[position]
-
-
 }

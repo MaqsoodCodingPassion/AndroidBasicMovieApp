@@ -16,11 +16,9 @@ import com.msk.movies.model.MediaEntity
  */
 class BookMarkMovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val name: TextView = view.findViewById(R.id.media_title)
-    private val mediaPoster: ImageView = view.findViewById(R.id.poster)
+    val mediaPoster: ImageView = view.findViewById(R.id.poster)
     val deleteBookMark: ImageView = view.findViewById(R.id.delete)
     private var media: MediaEntity? = null
-
-
 
     fun bind(movie: MediaEntity?) {
         if (movie == null) {

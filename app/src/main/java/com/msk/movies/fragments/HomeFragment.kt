@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
     private var mSearchItemList : PagedList<SearchItem>? = null
     private var mView: View? = null
     private var mBookMarkAdapter : BookMarkMovieAdapter? = null
-
+    private var searchMovie: String? = null
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -47,9 +47,11 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        searchMovie = arguments?.getString("SEARCH_MOVIE")
         if(mView==null){
             mViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel::class.java)
             mView = inflater.inflate(R.layout.fragment_home, container, false)
+            if(searchMovie!=null) callSearchMovieAPI(searchMovie) else
             callSearchMovieAPI(MovieUtils.DEFAULT_SEARCH_MOVIE_NAME)
         }
         return mView

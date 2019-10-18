@@ -35,7 +35,6 @@ class MovieListRepository @Inject constructor(private val service: Service,
         return newsList
     }
 
-
     fun fetchMovieDetails(movieName: String, plot: String, key: String): MutableLiveData<MediaEntity> {
 
         val moviesListResponse: MutableLiveData<MediaEntity> = MutableLiveData()
