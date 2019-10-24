@@ -1,22 +1,18 @@
 package com.msk.movies
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.gojek.assignment.db.MediaDao
 import com.msk.movies.dataSource.MovieDataSourceFactory
 import com.msk.movies.db.MediaLocalCache
 import com.msk.movies.model.MediaEntity
 import com.msk.movies.model.SearchItem
 import com.msk.movies.service.Service
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MovieListRepository @Inject constructor(private val service: Service,
-                                              private val daoRepo: MediaDao,
                                               private val cache: MediaLocalCache) {
 
     lateinit var newsList: LiveData<PagedList<SearchItem>>
@@ -35,25 +31,8 @@ class MovieListRepository @Inject constructor(private val service: Service,
         return newsList
     }
 
-    fun fetchMovieDetails(movieName: String, plot: String, key: String): MutableLiveData<MediaEntity> {
-
-        val moviesListResponse: MutableLiveData<MediaEntity> = MutableLiveData()
-        val observable = service.getMovieDetails(movieName, plot, key)
-
-        observable.map<MediaEntity> {
-            //saveMovieDetailsRecord(it)
-            it
-        }.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    moviesListResponse.value = it
-                },
-                {
-                    moviesListResponse.value = null
-                })
-
-        return moviesListResponse
+    fun fetchMovieDetails(movieName: String, plot: String, key: String): Single<MediaEntity> {
+        return service.getMovieDetails(movieName, plot, key)
     }
 
     fun saveMovieDetailsRecord(movieDetails: MediaEntity) {

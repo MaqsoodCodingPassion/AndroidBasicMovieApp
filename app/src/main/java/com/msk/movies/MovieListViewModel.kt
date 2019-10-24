@@ -1,10 +1,13 @@
 package com.msk.movies
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.msk.movies.model.MediaEntity
 import com.msk.movies.model.SearchItem
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class MovieListViewModel(val repository: MovieListRepository) : ViewModel() {
 
@@ -14,11 +17,7 @@ class MovieListViewModel(val repository: MovieListRepository) : ViewModel() {
         return repository.getMovieList(movieName, key)
     }
 
-    fun fetchMovieDetails(imdbID: String, plot: String,key: String): LiveData<MediaEntity> {
-        return repository.fetchMovieDetails(imdbID, plot,key)
-    }
-
-    fun getEntity(movieId: String): LiveData<MediaEntity>{
+    fun getEntity(movieId: String): LiveData<MediaEntity> {
         return repository.getEntity(movieId)
     }
 
@@ -36,5 +35,30 @@ class MovieListViewModel(val repository: MovieListRepository) : ViewModel() {
 
     fun saveMovieDetailsRecord(mediaEntity: MediaEntity) {
         repository.saveMovieDetailsRecord(mediaEntity)
+    }
+
+    fun fetchMovieDetails(
+        movieName: String,
+        plot: String,
+        key: String
+    ): MutableLiveData<MediaEntity> {
+
+        val moviesListResponse: MutableLiveData<MediaEntity> = MutableLiveData()
+        val observable = repository.fetchMovieDetails(movieName, plot, key)
+
+        observable.map<MediaEntity> {
+            //saveMovieDetailsRecord(it)
+            it
+        }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    moviesListResponse.value = it
+                },
+                {
+                    moviesListResponse.value = null
+                })
+
+        return moviesListResponse
     }
 }
