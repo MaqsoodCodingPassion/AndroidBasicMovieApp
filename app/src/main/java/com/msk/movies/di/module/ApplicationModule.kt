@@ -1,9 +1,9 @@
 package com.msk.movies.di.module
 
 import androidx.room.Room
-import com.gojek.assignment.db.MediaDao
-import com.gojek.assignment.db.MediaDatabase
 import com.msk.movies.MovieApplication
+import com.msk.movies.db.MediaDao
+import com.msk.movies.db.MediaDatabase
 import com.msk.movies.db.MediaLocalCache
 import com.msk.movies.di.BaseUrl
 import dagger.Module

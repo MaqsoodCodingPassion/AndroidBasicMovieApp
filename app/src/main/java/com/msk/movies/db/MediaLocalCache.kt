@@ -2,7 +2,6 @@ package com.msk.movies.db
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import com.gojek.assignment.db.MediaDao
 import com.msk.movies.model.MediaEntity
 import java.util.concurrent.Executor
 

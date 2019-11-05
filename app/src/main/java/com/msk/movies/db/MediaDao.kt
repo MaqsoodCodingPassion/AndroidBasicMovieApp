@@ -1,4 +1,4 @@
-package com.gojek.assignment.db
+package com.msk.movies.db
 
 
 import androidx.lifecycle.LiveData
