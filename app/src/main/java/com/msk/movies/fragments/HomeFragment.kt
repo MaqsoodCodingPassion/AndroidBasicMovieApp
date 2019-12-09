@@ -14,10 +14,7 @@ import androidx.navigation.Navigation
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.msk.movies.MovieListAdapter
-import com.msk.movies.MovieListViewModel
-import com.msk.movies.MovieUtils
-import com.msk.movies.R
+import com.msk.movies.*
 import com.msk.movies.bookmark.BookMarkMovieAdapter
 import com.msk.movies.model.MediaEntity
 import com.msk.movies.model.SearchItem
@@ -52,7 +49,7 @@ class HomeFragment : Fragment() {
             mViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel::class.java)
             mView = inflater.inflate(R.layout.fragment_home, container, false)
             if(searchMovie!=null) callSearchMovieAPI(searchMovie) else
-            callSearchMovieAPI(MovieUtils.DEFAULT_SEARCH_MOVIE_NAME)
+            callSearchMovieAPI(DEFAULT_SEARCH_MOVIE_NAME)
         }
         return mView
     }
@@ -104,19 +101,19 @@ class HomeFragment : Fragment() {
     }
 
     private fun callSearchMovieAPI(movieName: String?) {
-        mViewModel.getMovieList(movieName!!, MovieUtils.MOVIE_API_KEY).observe(this, Observer {
+        mViewModel.getMovieList(movieName!!, MOVIE_API_KEY).observe(this, Observer {
             if(it.size > 0){
                 mSearchItemList = it
                 mMovieListAdapter!!.submitList(it)
             }else{
                 resetList()
-                MovieUtils.showErrorDialog(activity!!, resources.getString(R.string.movie_not_found))
+                showErrorDialog(activity!!, resources.getString(R.string.movie_not_found))
             }
         })
     }
 
     private fun resetList() {
-        MovieUtils.hideKeyboard(activity!!)
+        hideKeyboard(activity!!)
         mMovieListAdapter!!.submitList(null)
         mMovieListAdapter!!.notifyDataSetChanged()
     }

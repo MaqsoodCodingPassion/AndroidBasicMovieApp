@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import com.msk.movies.MOVIE_API_KEY
 import com.msk.movies.MovieListViewModel
-import com.msk.movies.MovieUtils
 import com.msk.movies.R
 import com.msk.movies.model.MediaEntity
 import com.msk.movies.util.ViewModelFactory
@@ -74,7 +74,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun callSearchMovieAPI(imdbID: String?) {
-        mViewModel.fetchMovieDetails(imdbID!!, "full", MovieUtils.MOVIE_API_KEY)
+        mViewModel.fetchMovieDetails(imdbID!!, "full", MOVIE_API_KEY)
             .observe(this, Observer {
                 mediaEntity = it
                 media_title.text = it.title

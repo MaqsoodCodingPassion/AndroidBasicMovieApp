@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
             override fun onQueryTextSubmit(query: String): Boolean {
-                MovieUtils.hideKeyboard(this@MainActivity)
+                hideKeyboard(this@MainActivity)
                 var bundle = Bundle()
                 bundle.putString("SEARCH_MOVIE",query)
                 navController.navigate(R.id.homeFragment,bundle)
