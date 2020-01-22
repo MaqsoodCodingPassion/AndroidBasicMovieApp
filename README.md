@@ -1,13 +1,13 @@
 # AndroidBasicMovieApp
 
-This app content about the basic movie details which is implemented in MVVM architecture using:
-
- NavigationController, 
- Paging, 
- Room,
- Dagger2,
- RxJava2,
- Retrofit
+This app developed in Kotlin with MVVM architecture by using components are :
+- Navigation controller 
+- Dagger
+- Live data
+- Room
+- View model
+- Rx java
+- Retrofit
 
 ![Alt Text](https://i.imgur.com/BrJMTeP.png)
 ![Alt Text](https://i.imgur.com/PiBAYEm.png)
