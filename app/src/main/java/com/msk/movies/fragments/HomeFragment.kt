@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.msk.movies.*
 import com.msk.movies.bookmark.BookMarkMovieAdapter
 import com.msk.movies.model.MediaEntity
-import com.msk.movies.model.SearchItem
+import com.msk.movies.model.impersonate.UsersItem
 import com.msk.movies.util.OnItemClickListener
 import com.msk.movies.util.ViewModelFactory
 import com.msk.movies.util.addOnItemClickListener
@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var mViewModel: MovieListViewModel
     private var mMovieListAdapter: MovieListAdapter? = null
-    private var mSearchItemList : PagedList<SearchItem>? = null
+    private var mSearchItemList : PagedList<UsersItem>? = null
     private var mView: View? = null
     private var mBookMarkAdapter : BookMarkMovieAdapter? = null
     private var searchMovie: String? = null
@@ -48,8 +48,8 @@ class HomeFragment : Fragment() {
         if(mView==null){
             mViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel::class.java)
             mView = inflater.inflate(R.layout.fragment_home, container, false)
-            if(searchMovie!=null) callSearchMovieAPI(searchMovie) else
-            callSearchMovieAPI(DEFAULT_SEARCH_MOVIE_NAME)
+            if(searchMovie!=null) callSearchMovieAPI(searchMovie!!) else
+            callSearchMovieAPI(DEFAULT_FILTER)
         }
         return mView
     }
@@ -85,9 +85,9 @@ class HomeFragment : Fragment() {
         movieRecyclerView.addOnItemClickListener(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
                 var bundle = Bundle()
-                bundle.putString("POSTER_URL",mSearchItemList?.get(position)?.poster)
-                bundle.putString("imdbID",mSearchItemList?.get(position)?.imdbID)
-                navController.navigate(R.id.action_fragmentHome_to_movieDetails,bundle)
+                //bundle.putString("POSTER_URL",mSearchItemList?.get(position)?.poster)
+                //bundle.putString("imdbID",mSearchItemList?.get(position)?.imdbID)
+              //  navController.navigate(R.id.action_fragmentHome_to_movieDetails,bundle)
             }
         })
     }
@@ -100,8 +100,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun callSearchMovieAPI(movieName: String?) {
-        mViewModel.getMovieList(movieName!!, MOVIE_API_KEY).observe(this, Observer {
+    private fun callSearchMovieAPI(filter: String) {
+        mViewModel.getMovieList(0, filter).observe(this, Observer {
             if(it.size > 0){
                 mSearchItemList = it
                 mMovieListAdapter!!.submitList(it)

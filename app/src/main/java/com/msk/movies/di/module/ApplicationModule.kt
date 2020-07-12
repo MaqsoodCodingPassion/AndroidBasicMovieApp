@@ -17,7 +17,7 @@ class ApplicationModule {
     @Provides
     @BaseUrl
     fun provideBaseUrl(): String {
-        return "http://www.omdbapi.com"
+        return "https://mobilesdoffline.service-now.com"
     }
 
     @Provides

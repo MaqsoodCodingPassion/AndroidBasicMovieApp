@@ -6,7 +6,7 @@ import androidx.paging.PagedList
 import com.msk.movies.dataSource.MovieDataSourceFactory
 import com.msk.movies.db.MediaLocalCache
 import com.msk.movies.model.MediaEntity
-import com.msk.movies.model.SearchItem
+import com.msk.movies.model.impersonate.UsersItem
 import com.msk.movies.service.Service
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
@@ -15,16 +15,16 @@ import javax.inject.Inject
 class MovieListRepository @Inject constructor(private val service: Service,
                                               private val cache: MediaLocalCache) {
 
-    lateinit var newsList: LiveData<PagedList<SearchItem>>
+    lateinit var newsList: LiveData<PagedList<UsersItem>>
     private val compositeDisposable = CompositeDisposable()
-    private val pageSize = 5
+    private val pageSize = 50
     private var newsDataSourceFactory: MovieDataSourceFactory? = null
 
-    fun getMovieList(movieName: String, apiKey: String): LiveData<PagedList<SearchItem>> {
-        newsDataSourceFactory = MovieDataSourceFactory(compositeDisposable, service, movieName, apiKey)
+    fun getMovieList(index: Int, filter: String): LiveData<PagedList<UsersItem>> {
+        newsDataSourceFactory = MovieDataSourceFactory(compositeDisposable, service, index, filter)
         val config = PagedList.Config.Builder()
             .setPageSize(pageSize)
-            .setInitialLoadSizeHint(pageSize * 2)
+            //.setInitialLoadSizeHint(pageSize * 2)
             .setEnablePlaceholders(false)
             .build()
         newsList = LivePagedListBuilder(newsDataSourceFactory!!, config).build()

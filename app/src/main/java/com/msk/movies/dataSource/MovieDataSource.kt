@@ -1,30 +1,30 @@
 package com.msk.movies.dataSource
 
 import androidx.paging.PageKeyedDataSource
-import com.msk.movies.model.SearchItem
+import com.msk.movies.model.impersonate.UsersItem
 import com.msk.movies.service.Service
 import io.reactivex.disposables.CompositeDisposable
 
 class MovieDataSource(
     private val networkService: Service,
     private val compositeDisposable: CompositeDisposable,
-    val movieName: String,
-    val apiKey: String
-) : PageKeyedDataSource<Int, SearchItem>() {
+    var start: Int,
+    val filter: String
+) : PageKeyedDataSource<Int, UsersItem>() {
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, SearchItem>
+        callback: LoadInitialCallback<Int, UsersItem>
     ) {
         compositeDisposable.add(
-            networkService.getMoviesList(movieName, apiKey, 1, params.requestedLoadSize)
+            networkService.getMoviesList(1, filter)
                 .subscribe(
                     { response ->
-                        response?.search?.let {
+                        response?.users?.let {
                             callback.onResult(
                                 it,
                                 null,
-                                2
+                                1
                             )
                         }
                     },
@@ -33,12 +33,12 @@ class MovieDataSource(
         )
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, SearchItem>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, UsersItem>) {
         compositeDisposable.add(
-            networkService.getMoviesList(movieName, apiKey, params.key, params.requestedLoadSize)
+            networkService.getMoviesList(params.requestedLoadSize, filter)
                 .subscribe(
                     { response ->
-                        response?.search?.let {
+                        response?.users?.let {
                             callback.onResult(
                                 it,
                                 params.key + 1
@@ -50,6 +50,6 @@ class MovieDataSource(
         )
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, SearchItem>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, UsersItem>) {
     }
 }

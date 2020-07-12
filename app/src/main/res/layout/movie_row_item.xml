@@ -3,44 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:padding="@dimen/margin_4">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
+
+    <RadioButton
+        android:id="@+id/radioBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"/>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="5dp">
-
-            <ImageView
-                android:id="@+id/media_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:scaleType="fitXY" />
-
-            <TextView
-                android:id="@+id/media_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="13dp"
-                android:layout_toRightOf="@+id/media_image"/>
-
-            <TextView
-                android:id="@+id/media_year"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/media_title"
-                android:layout_marginLeft="13dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="12dp"
-                android:gravity="end"/>
-
-        </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
-
+    <TextView
+        android:id="@+id/name"
+        android:layout_marginLeft="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

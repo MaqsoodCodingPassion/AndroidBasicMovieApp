@@ -10,11 +10,10 @@ import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.msk.movies.model.SearchItem
+import com.msk.movies.model.impersonate.UsersItem
 
 class MovieListAdapter() :
-    PagedListAdapter<SearchItem, MovieListAdapter.MovieViewHolder>(NewsDiffCallback){
+    PagedListAdapter<UsersItem, MovieListAdapter.MovieViewHolder>(NewsDiffCallback){
 
     private var context: Context? = null
 
@@ -27,23 +26,18 @@ class MovieListAdapter() :
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val searchItem = getItem(position)
-        holder.name.text = searchItem!!.title
-        holder.year.text = searchItem.year
-        Glide.with(context)
-            .load(searchItem.poster)
-            .into(holder.movieImageView)
-
+        val UsersItem = getItem(position)
+        holder.name.text = UsersItem?.displayName
     }
 
     companion object {
-        val NewsDiffCallback = object : DiffUtil.ItemCallback<SearchItem>() {
-            override fun areItemsTheSame(oldItem: SearchItem, newItem: SearchItem): Boolean {
-                return oldItem.title == newItem.title
+        val NewsDiffCallback = object : DiffUtil.ItemCallback<UsersItem>() {
+            override fun areItemsTheSame(oldItem: UsersItem, newItem: UsersItem): Boolean {
+                return oldItem.displayName == newItem.displayName
             }
 
             @SuppressLint("DiffUtilEquals")
-            override fun areContentsTheSame(oldItem: SearchItem, newItem: SearchItem): Boolean {
+            override fun areContentsTheSame(oldItem: UsersItem, newItem: UsersItem): Boolean {
                 return oldItem == newItem
                 //oldItem.equals(newItem)
             }
@@ -51,8 +45,6 @@ class MovieListAdapter() :
     }
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        internal val name: TextView = itemView.findViewById<View>(R.id.media_title) as TextView
-        internal val year: TextView = itemView.findViewById<View>(R.id.media_year) as TextView
-        internal val movieImageView: ImageView = itemView.findViewById<View>(R.id.media_image) as ImageView
+        internal val name: TextView = itemView.findViewById<View>(R.id.name) as TextView
     }
 }

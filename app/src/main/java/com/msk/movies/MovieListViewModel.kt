@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.msk.movies.model.MediaEntity
-import com.msk.movies.model.SearchItem
+import com.msk.movies.model.impersonate.UsersItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -13,8 +13,8 @@ class MovieListViewModel(val repository: MovieListRepository) : ViewModel() {
 
     var bookMarkLiveData = repository.getBookMarkedMovies()
 
-    fun getMovieList(movieName: String, key: String): LiveData<PagedList<SearchItem>> {
-        return repository.getMovieList(movieName, key)
+    fun getMovieList(index: Int, filter: String): LiveData<PagedList<UsersItem>> {
+        return repository.getMovieList(index, filter)
     }
 
     fun getEntity(movieId: String): LiveData<MediaEntity> {
