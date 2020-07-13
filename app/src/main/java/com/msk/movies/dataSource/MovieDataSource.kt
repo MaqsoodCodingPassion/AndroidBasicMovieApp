@@ -17,7 +17,7 @@ class MovieDataSource(
         callback: LoadInitialCallback<Int, UsersItem>
     ) {
         compositeDisposable.add(
-            networkService.getMoviesList(1, filter)
+            networkService.getMoviesList(0, filter)
                 .subscribe(
                     { response ->
                         response?.users?.let {
