@@ -7,9 +7,15 @@ import androidx.paging.PagedList
 import com.msk.movies.model.MediaEntity
 import com.msk.movies.model.SearchItem
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
 class MovieListViewModel(val repository: MovieListRepository) : ViewModel() {
+
+    private val compositeDisposable = CompositeDisposable()
+
+    val moviesListResponse: MutableLiveData<MediaEntity> = MutableLiveData()
 
     var bookMarkLiveData = repository.getBookMarkedMovies()
 
@@ -37,28 +43,35 @@ class MovieListViewModel(val repository: MovieListRepository) : ViewModel() {
         repository.saveMovieDetailsRecord(mediaEntity)
     }
 
-    fun fetchMovieDetails(
-        movieName: String,
-        plot: String,
-        key: String
-    ): MutableLiveData<MediaEntity> {
-
-        val moviesListResponse: MutableLiveData<MediaEntity> = MutableLiveData()
-        val observable = repository.fetchMovieDetails(movieName, plot, key)
-
-        observable.map<MediaEntity> {
-            //saveMovieDetailsRecord(it)
-            it
-        }.subscribeOn(Schedulers.io())
+    fun fetchMovieDetails(movieName: String, plot: String, key: String) {
+        compositeDisposable += repository.fetchMovieDetails(movieName, plot, key)
+            .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    moviesListResponse.value = it
-                },
-                {
-                    moviesListResponse.value = null
-                })
+            .subscribeWith(object : DisposableSingleObserver<MediaEntity>() {
+                override fun onSuccess(data: MediaEntity) {
+                    moviesListResponse.value = data
+                }
 
-        return moviesListResponse
+                override fun onError(e: Throwable) {
+                    moviesListResponse.value = null
+                }
+            })
+    }
+
+    /*
+       Adding disposables using extension function
+     */
+    operator fun CompositeDisposable.plusAssign(disposable: DisposableSingleObserver<MediaEntity>) {
+        add(disposable)
+    }
+
+    /*
+       clearing all disposables
+     */
+    override fun onCleared() {
+        super.onCleared()
+        if (!compositeDisposable.isDisposed) {
+            compositeDisposable.dispose()
+        }
     }
 }

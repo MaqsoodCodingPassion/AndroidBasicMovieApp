@@ -11,7 +11,8 @@ import java.util.concurrent.Executor
  */
 class MediaLocalCache(
     private val mediaDao: MediaDao,
-    private val ioExecutor: Executor) {
+    private val ioExecutor: Executor
+) {
 
     /**
      * Insert a single record in the database, on a background thread.

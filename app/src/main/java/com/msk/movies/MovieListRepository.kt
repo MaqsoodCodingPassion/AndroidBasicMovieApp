@@ -12,8 +12,10 @@ import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class MovieListRepository @Inject constructor(private val service: Service,
-                                              private val cache: MediaLocalCache) {
+class MovieListRepository @Inject constructor(
+    private val service: Service,
+    private val cache: MediaLocalCache
+) {
 
     lateinit var newsList: LiveData<PagedList<SearchItem>>
     private val compositeDisposable = CompositeDisposable()
@@ -21,7 +23,8 @@ class MovieListRepository @Inject constructor(private val service: Service,
     private var newsDataSourceFactory: MovieDataSourceFactory? = null
 
     fun getMovieList(movieName: String, apiKey: String): LiveData<PagedList<SearchItem>> {
-        newsDataSourceFactory = MovieDataSourceFactory(compositeDisposable, service, movieName, apiKey)
+        newsDataSourceFactory =
+            MovieDataSourceFactory(compositeDisposable, service, movieName, apiKey)
         val config = PagedList.Config.Builder()
             .setPageSize(pageSize)
             .setInitialLoadSizeHint(pageSize * 2)
@@ -39,7 +42,7 @@ class MovieListRepository @Inject constructor(private val service: Service,
         cache.insertMovie(movieDetails)
     }
 
-    fun getEntity(mediaId: String) : LiveData<MediaEntity> {
+    fun getEntity(mediaId: String): LiveData<MediaEntity> {
         return cache.movieByMediaId(mediaId)
     }
 

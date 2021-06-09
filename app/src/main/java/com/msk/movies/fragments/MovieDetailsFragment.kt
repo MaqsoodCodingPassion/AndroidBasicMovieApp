@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
-import com.msk.movies.MOVIE_API_KEY
-import com.msk.movies.MovieListViewModel
-import com.msk.movies.R
+import com.msk.movies.*
 import com.msk.movies.model.MediaEntity
 import com.msk.movies.util.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
@@ -29,7 +27,7 @@ class MovieDetailsFragment : Fragment() {
 
     private lateinit var mViewModel: MovieListViewModel
 
-    private var movieId: String? = null
+    private lateinit var movieId: String
 
     private lateinit var mediaEntity: MediaEntity
 
@@ -43,12 +41,13 @@ class MovieDetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        movieId = arguments?.getString("imdbID")
+        movieId = arguments?.getString(IMDB_ID_KEY).toString()
         if (mView == null) {
             mViewModel =
                 ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel::class.java)
             mView = inflater.inflate(R.layout.fragment_movie_details, container, false)
-            callSearchMovieAPI(movieId)
+            mViewModel.fetchMovieDetails(movieId, "full", MOVIE_API_KEY)
+            callSearchMovieAPI()
         }
         return mView
     }
@@ -56,14 +55,15 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var entityLiveData = mViewModel.getEntity(movieId!!)
+        var entityLiveData = mViewModel.getEntity(movieId)
         entityLiveData.observe(this, Observer {
             try {
                 if (it.imdbID.equals(movieId)) {
                     bookmark.visibility = View.GONE
                 }
             } //If DB does not have record then it throw NullPointerException
-            catch (exp: NullPointerException) { }
+            catch (exp: NullPointerException) {
+            }
         })
 
         bookmark.setOnClickListener {
@@ -73,12 +73,12 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
-    private fun callSearchMovieAPI(imdbID: String?) {
-        mViewModel.fetchMovieDetails(imdbID!!, "full", MOVIE_API_KEY)
+    private fun callSearchMovieAPI() {
+        mViewModel.moviesListResponse
             .observe(this, Observer {
                 mediaEntity = it
                 media_title.text = it.title
-                release_date.text = "Imdb : " + it.imdbRating
+                release_date.text = IMDB_STR + it.imdbRating
                 metascore.text = it.metascore
                 casting.text = it.actors
                 production.text = it.production

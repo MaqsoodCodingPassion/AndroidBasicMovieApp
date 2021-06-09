@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.msk.movies.model.SearchItem
 
 class MovieListAdapter() :
-    PagedListAdapter<SearchItem, MovieListAdapter.MovieViewHolder>(NewsDiffCallback){
+    PagedListAdapter<SearchItem, MovieListAdapter.MovieViewHolder>(NewsDiffCallback) {
 
     private var context: Context? = null
 
@@ -53,6 +53,7 @@ class MovieListAdapter() :
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal val name: TextView = itemView.findViewById<View>(R.id.media_title) as TextView
         internal val year: TextView = itemView.findViewById<View>(R.id.media_year) as TextView
-        internal val movieImageView: ImageView = itemView.findViewById<View>(R.id.media_image) as ImageView
+        internal val movieImageView: ImageView =
+            itemView.findViewById<View>(R.id.media_image) as ImageView
     }
 }

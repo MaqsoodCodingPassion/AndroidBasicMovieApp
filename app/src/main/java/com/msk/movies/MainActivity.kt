@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
-    private var searchView: SearchView? = null
+    private lateinit var searchView: SearchView
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -42,15 +42,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        searchView = menu.findItem(R.id.action_search)
-            .actionView as SearchView
-        searchView!!.setSearchableInfo(
-            searchManager
-                .getSearchableInfo(componentName)
+        searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName)
         )
-        searchView!!.setMaxWidth(Integer.MAX_VALUE)
+        searchView.maxWidth = Integer.MAX_VALUE
 
-        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             android.widget.SearchView.OnQueryTextListener {
 
             override fun onQueryTextChange(newText: String): Boolean {
@@ -59,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 hideKeyboard(this@MainActivity)
                 var bundle = Bundle()
-                bundle.putString("SEARCH_MOVIE",query)
+                bundle.putString(getString(R.string.search_movie_key),query)
                 navController.navigate(R.id.homeFragment,bundle)
                 return false
             }
@@ -72,7 +69,6 @@ class MainActivity : AppCompatActivity() {
         return if (id == R.id.action_search) {
             true
         } else super.onOptionsItemSelected(item)
-
     }
 
     private fun whiteNotificationBar(view: View) {

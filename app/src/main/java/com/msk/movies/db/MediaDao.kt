@@ -25,7 +25,7 @@ interface MediaDao {
     fun updateMovieWithBookMark(bookmarked: Boolean, mediaId: String)
 
     @Query("select * from media where bookmark = :isBookmarked")
-    fun loadBookMarkedList(isBookmarked:Boolean): LiveData<List<MediaEntity>>
+    fun loadBookMarkedList(isBookmarked: Boolean): LiveData<List<MediaEntity>>
 
     @Query("DELETE FROM media WHERE imdbid = :mediaId")
     fun deleteMovie(mediaId: String)

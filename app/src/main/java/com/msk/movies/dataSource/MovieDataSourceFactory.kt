@@ -10,13 +10,13 @@ class MovieDataSourceFactory(
     private val compositeDisposable: CompositeDisposable,
     private val networkService: Service,
     private val movieName: String,
-    private val apiKey: String)
-    : DataSource.Factory<Int, SearchItem>() {
+    private val apiKey: String
+) : DataSource.Factory<Int, SearchItem>() {
 
-    val newsDataSourceLiveData = MutableLiveData<MovieDataSource>()
+    private val newsDataSourceLiveData = MutableLiveData<MovieDataSource>()
 
     override fun create(): DataSource<Int, SearchItem> {
-        val newsDataSource = MovieDataSource(networkService, compositeDisposable,movieName,apiKey)
+        val newsDataSource = MovieDataSource(networkService, compositeDisposable, movieName, apiKey)
         newsDataSourceLiveData.postValue(newsDataSource)
         return newsDataSource
     }

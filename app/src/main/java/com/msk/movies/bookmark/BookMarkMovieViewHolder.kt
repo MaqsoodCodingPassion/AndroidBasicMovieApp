@@ -38,11 +38,11 @@ class BookMarkMovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     companion object {
-        lateinit var context : Context
+        lateinit var context: Context
         fun create(parent: ViewGroup): BookMarkMovieViewHolder {
             context = parent.context
             val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.bookmark_movie_item, parent, false)
+                .inflate(R.layout.bookmark_movie_item, parent, false)
             return BookMarkMovieViewHolder(view)
         }
     }

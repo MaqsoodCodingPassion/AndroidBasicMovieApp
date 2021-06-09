@@ -8,8 +8,8 @@ import io.reactivex.disposables.CompositeDisposable
 class MovieDataSource(
     private val networkService: Service,
     private val compositeDisposable: CompositeDisposable,
-    val movieName: String,
-    val apiKey: String
+    private val movieName: String,
+    private val apiKey: String
 ) : PageKeyedDataSource<Int, SearchItem>() {
 
     override fun loadInitial(
@@ -28,7 +28,7 @@ class MovieDataSource(
                             )
                         }
                     },
-                    { it.printStackTrace()}
+                    { it.printStackTrace() }
                 )
         )
     }
