@@ -8,8 +8,6 @@ import retrofit2.http.Query
 
 interface Service {
 
-    //"http://www.omdbapi.com/?i=tt0063300&plot=full&apikey=7294277f"
-
     @GET("/")
     fun getMoviesList(
         @Query("s") movieName: String, @Query("apikey") key: String,
