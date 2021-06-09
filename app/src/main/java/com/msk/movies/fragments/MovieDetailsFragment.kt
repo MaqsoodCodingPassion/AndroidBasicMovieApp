@@ -55,7 +55,7 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var entityLiveData = mViewModel.getEntity(movieId)
+        val entityLiveData = mViewModel.getEntity(movieId)
         entityLiveData.observe(this, Observer {
             try {
                 if (it.imdbID.equals(movieId)) {

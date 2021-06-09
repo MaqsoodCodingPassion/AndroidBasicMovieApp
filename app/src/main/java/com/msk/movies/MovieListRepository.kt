@@ -14,8 +14,7 @@ import javax.inject.Inject
 
 class MovieListRepository @Inject constructor(
     private val service: Service,
-    private val cache: MediaLocalCache
-) {
+    private val cache: MediaLocalCache) {
 
     lateinit var newsList: LiveData<PagedList<SearchItem>>
     private val compositeDisposable = CompositeDisposable()

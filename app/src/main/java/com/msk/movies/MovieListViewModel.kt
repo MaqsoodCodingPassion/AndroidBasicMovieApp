@@ -11,7 +11,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
-class MovieListViewModel(val repository: MovieListRepository) : ViewModel() {
+class MovieListViewModel(private val repository: MovieListRepository) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
