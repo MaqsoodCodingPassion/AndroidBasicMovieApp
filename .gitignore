@@ -1,1 +1,12 @@
-/build
+**/target/*
+**/*.iml
+**/*.ipr
+**/*.iws
+.idea
+out/
+.gradle
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+.DS_Store
+local.properties

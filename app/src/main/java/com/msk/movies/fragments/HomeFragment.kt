@@ -1,6 +1,5 @@
 package com.msk.movies.fragments
 
-
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.msk.movies.*
 import com.msk.movies.bookmark.BookMarkMovieAdapter
-import com.msk.movies.model.MediaEntity
 import com.msk.movies.model.SearchItem
 import com.msk.movies.util.OnItemClickListener
 import com.msk.movies.util.ViewModelFactory
@@ -31,10 +29,11 @@ class HomeFragment : Fragment() {
 
     private lateinit var mViewModel: MovieListViewModel
     private var mMovieListAdapter: MovieListAdapter? = null
-    private var mSearchItemList : PagedList<SearchItem>? = null
+    private lateinit var mSearchItemList: PagedList<SearchItem>
     private var mView: View? = null
-    private var mBookMarkAdapter : BookMarkMovieAdapter? = null
+    private lateinit var mBookMarkAdapter: BookMarkMovieAdapter
     private var searchMovie: String? = null
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -43,13 +42,18 @@ class HomeFragment : Fragment() {
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        searchMovie = arguments?.getString("SEARCH_MOVIE")
-        if(mView==null){
-            mViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel::class.java)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        searchMovie = arguments?.getString(SEARCH_MOVIE)
+        if (mView == null) {
+            mViewModel =
+                ViewModelProviders.of(this, viewModelFactory).get(MovieListViewModel::class.java)
             mView = inflater.inflate(R.layout.fragment_home, container, false)
-            if(searchMovie!=null) callSearchMovieAPI(searchMovie) else
-            callSearchMovieAPI(DEFAULT_SEARCH_MOVIE_NAME)
+            if (searchMovie != null) callSearchMovieAPI(searchMovie) else
+                callSearchMovieAPI(DEFAULT_SEARCH_MOVIE_NAME)
         }
         return mView
     }
@@ -61,33 +65,36 @@ class HomeFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        if(mMovieListAdapter==null){
+        if (mMovieListAdapter == null) {
             mMovieListAdapter = MovieListAdapter()
-            movieRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            movieRecyclerView.layoutManager =
+                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             movieRecyclerView.adapter = mMovieListAdapter
 
-            mBookMarkAdapter = BookMarkMovieAdapter(listOf(),mViewModel){
-                var bundle = Bundle()
-                bundle.putString("imdbID",it?.imdbID)
-                navController.navigate(R.id.action_fragmentHome_to_movieDetails,bundle)
+            mBookMarkAdapter = BookMarkMovieAdapter(listOf(), mViewModel) {
+                val bundle = Bundle()
+                bundle.putString(IMDB_ID_KEY, it.imdbID)
+                navController.navigate(R.id.action_fragmentHome_to_movieDetails, bundle)
             }
             bookmarkedMovies.adapter = mBookMarkAdapter
-            bookmarkedMovies.layoutManager = LinearLayoutManager(context,
-                LinearLayoutManager.HORIZONTAL, false)
+            bookmarkedMovies.layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL, false
+            )
         }
 
         mViewModel.getBookMarkedMovies()
-        mViewModel.bookMarkLiveData.observe(this, Observer<List<MediaEntity>?> {
-            showOrHideBookmarks(it?.size == 0)
-            it?.let { mBookMarkAdapter?.notifyDataSet(it) }
+        mViewModel.bookMarkLiveData.observe(this, Observer {
+            showOrHideBookmarks(it.isEmpty())
+            it.let { mBookMarkAdapter.notifyDataSet(it) }
         })
 
-        movieRecyclerView.addOnItemClickListener(object: OnItemClickListener {
+        movieRecyclerView.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                var bundle = Bundle()
-                bundle.putString("POSTER_URL",mSearchItemList?.get(position)?.poster)
-                bundle.putString("imdbID",mSearchItemList?.get(position)?.imdbID)
-                navController.navigate(R.id.action_fragmentHome_to_movieDetails,bundle)
+                val bundle = Bundle()
+                bundle.putString(POSTER_URL_KEY, mSearchItemList[position]?.poster)
+                bundle.putString(IMDB_ID_KEY, mSearchItemList[position]?.imdbID)
+                navController.navigate(R.id.action_fragmentHome_to_movieDetails, bundle)
             }
         })
     }
@@ -102,10 +109,10 @@ class HomeFragment : Fragment() {
 
     private fun callSearchMovieAPI(movieName: String?) {
         mViewModel.getMovieList(movieName!!, MOVIE_API_KEY).observe(this, Observer {
-            if(it.size > 0){
+            if (it.size > 0) {
                 mSearchItemList = it
-                mMovieListAdapter!!.submitList(it)
-            }else{
+                mMovieListAdapter?.submitList(it)
+            } else {
                 resetList()
                 showErrorDialog(activity!!, resources.getString(R.string.movie_not_found))
             }
@@ -114,7 +121,7 @@ class HomeFragment : Fragment() {
 
     private fun resetList() {
         hideKeyboard(activity!!)
-        mMovieListAdapter!!.submitList(null)
-        mMovieListAdapter!!.notifyDataSetChanged()
+        mMovieListAdapter?.submitList(null)
+        mMovieListAdapter?.notifyDataSetChanged()
     }
 }
